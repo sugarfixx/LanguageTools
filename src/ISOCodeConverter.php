@@ -74,7 +74,7 @@ class ISOCodeConverter
         $method = 'iso2digit_'.$option;
         $dictionary = $this->{$method}();
         $value = $dictionary[strtolower($tag)];
-        return $this->returnFormated($value, $format);
+        return $this->createResponse($tag, $value, $format);
     }
 
     /**
@@ -89,7 +89,7 @@ class ISOCodeConverter
         $method = 'iso3digit_'.$option;
         $dictionary = $this->{$method}();
         $value = $dictionary[strtolower($tag)];
-        return $this->returnFormated($value, $format);
+        return $this->createResponse($tag, $value, $format);
     }
 
     /**
@@ -102,7 +102,7 @@ class ISOCodeConverter
     {
         $dictionary = $this->alpha3digit();
         $value = $dictionary[strtolower($tag)];
-        return $this->returnFormated($value, $format);
+        return $this->createResponse($tag, $value, $format);
     }
 
     /**
@@ -115,7 +115,13 @@ class ISOCodeConverter
     {
         $dictionary = $this->alpha2digit();
         $value = $dictionary[strtolower($tag)];
-        return $this->returnFormated($value, $format);
+        return $this->createResponse($tag, $value, $format);
+    }
+
+    public function createResponse($tag, $value, $format)
+    {
+        $response = (!empty($value) ? $value : $tag.': not found');
+        return $this->returnFormated($response, $format);
     }
 
     /**
